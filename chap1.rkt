@@ -41,13 +41,13 @@
 ;    is 1-100 inclusive or 1-99 inclusive; this one
 ;    goes to 100 inclusive
 
-(define fizzbuzz
 ; this is a default-args wrapper
+(define fizzbuzz
   (lambda ()
-    (fizzbuzz-iter 1)))
+    (fizzbuzz-iter 1 100)))
 
 (define fizzbuzz-iter
-  (lambda (iter)
+  (lambda (iter max)
 
     ; the actual meat of fizzbuzz
     (cond [(and (= (remainder iter 5) 0) 
@@ -57,8 +57,26 @@
 	  [else (printf "~a\n" iter)])
 
     ; call the iterator
-    (if (< iter 100) 
-	(fizzbuzz-iter (+ 1 iter)) 
+    (if (< iter max) 
+	(fizzbuzz-iter (+ 1 iter) max) 
 	(printf "\n"))))
     
 (fizzbuzz)
+
+; Exercise 1.11
+
+(define ex1.11
+  (lambda (n)
+    (if (< n 3)
+	n
+	(+ (* 2 (ex1.11 (- n 2))) 
+	   (* 3 (ex1.11 (- n 3)))
+	   (ex1.11 (- n 1))))))
+
+
+
+(ex1.11 2) ; 2
+(ex1.11 3) ; 4 ; f(3) = f(2) + 2*f(1) + 3*f(0) = 2 + 2 + 0
+(ex1.11 4) ; 11 ; f(4) = f(3) + 2*f(2) + 3*f(1) = 4 + 4 + 3 = 11
+(ex1.11 10)
+
